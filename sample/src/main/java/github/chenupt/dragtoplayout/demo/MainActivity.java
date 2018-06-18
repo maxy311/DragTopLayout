@@ -91,6 +91,16 @@ public class MainActivity extends ActionBarActivity {
         adapter = new ModelPagerAdapter(getSupportFragmentManager(), factory);
         viewPager.setAdapter(adapter);
         pagerSlidingTabStrip.setViewPager(viewPager);
+
+
+
+        findViewById(R.id.top_view).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
     }
 
     private List<String> getTitles(){

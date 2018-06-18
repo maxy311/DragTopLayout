@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "github.chenupt.dragtoplayout.demo"
@@ -30,4 +30,5 @@ dependencies {
 
     compile 'com.navercorp.pulltorefresh:library:3.2.0@aar'
 
+//    compile 'com.android.support.constraint:constraint-layout:1.1.2'
 }

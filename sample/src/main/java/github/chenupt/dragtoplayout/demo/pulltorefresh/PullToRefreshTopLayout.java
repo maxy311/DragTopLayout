@@ -39,8 +39,9 @@ public class PullToRefreshTopLayout extends PullToRefreshBase<DragTopLayout> {
 
     @Override
     protected boolean isReadyForPullStart() {
-        DragTopLayout refreshableView = getRefreshableView();
-        return refreshableView.getState() == DragTopLayout.PanelState.EXPANDED;
+//        DragTopLayout refreshableView = getRefreshableView();
+//        return refreshableView.getState() == DragTopLayout.PanelState.EXPANDED;
+        return false;
     }
 
     @Override

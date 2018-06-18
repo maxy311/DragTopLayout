@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity">
+
+    <github.chenupt.dragtoplayout.demo.Test.MyDragTopLayout
+        android:id="@+id/drag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        app:dtlCollapseOffset="50dp"
+        app:dtlOverlapping="50dp"
+        app:dtlOverDrag="false">
+
+        <!--top view-->
+        <LinearLayout
+            android:id="@+id/top_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="40dp"
+                android:text="Top View"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+
+        <!--content view-->
+        <FrameLayout
+            android:id="@+id/drag_content_view"
+            android:layout_width="match_parent"
+            android:background="#ff0"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="match_parent" />
+
+    </github.chenupt.dragtoplayout.demo.Test.MyDragTopLayout>
+
+</FrameLayout>

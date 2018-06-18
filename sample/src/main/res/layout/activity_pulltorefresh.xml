@@ -12,6 +12,7 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:minHeight="?attr/actionBarSize" />
+    <!--<github.chenupt.dragtoplayout.DragTopLayout-->
     <github.chenupt.dragtoplayout.demo.pulltorefresh.PullToRefreshTopLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/pull_to_refresh_layout"
@@ -47,4 +48,5 @@
             </ListView>
         </LinearLayout>
     </github.chenupt.dragtoplayout.demo.pulltorefresh.PullToRefreshTopLayout>
+    <!--</github.chenupt.dragtoplayout.DragTopLayout>-->
 </LinearLayout>

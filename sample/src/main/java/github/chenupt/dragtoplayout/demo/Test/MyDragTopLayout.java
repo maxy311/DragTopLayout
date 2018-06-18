@@ -1,20 +1,4 @@
-/*
- * Copyright 2015 chenupt
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * imitations under the License.
- */
-
-package github.chenupt.dragtoplayout;
+package github.chenupt.dragtoplayout.demo.Test;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -30,11 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-/**
- * Created by chenupt@gmail.com on 2015/1/18.
- * Description : Drag down to show a menu panel on the top.
- */
-public class DragTopLayout extends FrameLayout {
+import github.chenupt.dragtoplayout.demo.R;
+
+public class MyDragTopLayout  extends FrameLayout {
 
     private ViewDragHelper dragHelper;
     private int dragRange;
@@ -63,6 +45,7 @@ public class DragTopLayout extends FrameLayout {
     private PanelState panelState = PanelState.EXPANDED;
 
 
+    private int overlapping = 0;
     public static enum PanelState {
 
         COLLAPSED(0),
@@ -94,15 +77,15 @@ public class DragTopLayout extends FrameLayout {
 
 
 
-    public DragTopLayout(Context context) {
+    public MyDragTopLayout(Context context) {
         this(context, null);
     }
 
-    public DragTopLayout(Context context, AttributeSet attrs) {
+    public MyDragTopLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DragTopLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyDragTopLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
@@ -119,6 +102,7 @@ public class DragTopLayout extends FrameLayout {
         topViewId = a.getResourceId(R.styleable.DragTopLayout_dtlTopView, -1);
         initOpen(a.getBoolean(R.styleable.DragTopLayout_dtlOpen, true));
         captureTop = a.getBoolean(R.styleable.DragTopLayout_dtlCaptureTop, true);
+        overlapping = a.getDimensionPixelSize(R.styleable.DragTopLayout_dtlCollapseOffset, overlapping);
         a.recycle();
     }
 
@@ -370,10 +354,8 @@ public class DragTopLayout extends FrameLayout {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         try {
-
             boolean intercept = shouldIntercept && dragHelper.shouldInterceptTouchEvent(ev);
             Log.e("wwwwwwww", "onInterceptTouchEvent   intercept =  " + intercept);
-
             return intercept;
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -429,11 +411,11 @@ public class DragTopLayout extends FrameLayout {
     //================
     // public
     //================
-    
+
     public PanelState getState() {
         return panelState;
     }
-    
+
     public void openTopView(boolean anim) {
         // Before created
         if (dragContentView.getHeight() == 0) {
@@ -484,7 +466,7 @@ public class DragTopLayout extends FrameLayout {
         }
     }
 
-    public DragTopLayout setTouchMode(boolean shouldIntercept) {
+    public MyDragTopLayout setTouchMode(boolean shouldIntercept) {
         this.shouldIntercept = shouldIntercept;
         return this;
     }
@@ -494,7 +476,7 @@ public class DragTopLayout extends FrameLayout {
      *
      * @return SetupWizard
      */
-    public DragTopLayout listener(PanelListener panelListener) {
+    public MyDragTopLayout listener(PanelListener panelListener) {
         this.panelListener = panelListener;
         return this;
     }
@@ -505,7 +487,7 @@ public class DragTopLayout extends FrameLayout {
      *
      * @return SetupWizard
      */
-    public DragTopLayout setRefreshRatio(float ratio) {
+    public MyDragTopLayout setRefreshRatio(float ratio) {
         this.refreshRatio = ratio;
         return this;
     }
@@ -516,7 +498,7 @@ public class DragTopLayout extends FrameLayout {
      *
      * @return SetupWizard
      */
-    public DragTopLayout setOverDrag(boolean overDrag) {
+    public MyDragTopLayout setOverDrag(boolean overDrag) {
         this.overDrag = overDrag;
         return this;
     }
@@ -528,7 +510,7 @@ public class DragTopLayout extends FrameLayout {
      * @param id The id (R.id.xxxxx) of the content view.
      * @return
      */
-    public DragTopLayout setDragContentViewId(int id) {
+    public MyDragTopLayout setDragContentViewId(int id) {
         this.dragContentViewId = id;
         return this;
     }
@@ -540,7 +522,7 @@ public class DragTopLayout extends FrameLayout {
      * @param id The id (R.id.xxxxx) of the top view
      * @return
      */
-    public DragTopLayout setTopViewId(int id) {
+    public MyDragTopLayout setTopViewId(int id) {
         this.topViewId = id;
         return this;
     }
@@ -572,7 +554,7 @@ public class DragTopLayout extends FrameLayout {
      *
      * @return SetupWizard
      */
-    public DragTopLayout setCollapseOffset(int px) {
+    public MyDragTopLayout setCollapseOffset(int px) {
         collapseOffset = px;
         resetContentHeight();
         return this;
