@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 
 import github.chenupt.dragtoplayout.demo.R;
 
-public class MyDragTopLayout  extends FrameLayout {
+public class MyDragTopLayout extends FrameLayout {
 
     private ViewDragHelper dragHelper;
     private int dragRange;
@@ -78,7 +78,6 @@ public class MyDragTopLayout  extends FrameLayout {
     }
 
 
-
     public MyDragTopLayout(Context context) {
         this(context, null);
     }
@@ -108,7 +107,7 @@ public class MyDragTopLayout  extends FrameLayout {
         a.recycle();
     }
 
-    private void initOpen(boolean initOpen){
+    private void initOpen(boolean initOpen) {
         if (initOpen) {
             panelState = PanelState.EXPANDED;
         } else {
@@ -173,10 +172,10 @@ public class MyDragTopLayout  extends FrameLayout {
 
         Log.e("wwwwwwwww", "onLayout   " + getContext().getResources().getDimensionPixelSize(R.dimen.common_150dp));
         int topMarginTop = calculateTopMarginTop();
-        Log.e("wwwwwwwwwww",  "onLayout   topMarginTop =  " + topMarginTop + "      " + contentTopTemp + "  ratio =  " + ratio);
+        Log.e("wwwwwwwwwww", "onLayout   topMarginTop =  " + topMarginTop + "      " + contentTopTemp + "  ratio =  " + ratio);
         topView.layout(left, Math.min(topView.getPaddingTop(), topMarginTop - topViewHeight), right,
                 topMarginTop);
-        dragContentView.layout(left + 60 , contentTopTemp, right - 60,
+        dragContentView.layout(left + 60, contentTopTemp, right - 60,
                 contentTopTemp + dragContentView.getHeight());
     }
 
@@ -189,7 +188,7 @@ public class MyDragTopLayout  extends FrameLayout {
                 contentTop = newTopHeight;
                 Log.e("wwwwwwww", "wwwwwwwwwwww  resetTopViewHeight contentTop = " + contentTop);
                 handleSlide(contentTop);
-            } else if(panelState == PanelState.COLLAPSED){
+            } else if (panelState == PanelState.COLLAPSED) {
                 // update the drag content top when it is collapsed.
                 contentTop = collapseOffset;
             }
@@ -233,8 +232,8 @@ public class MyDragTopLayout  extends FrameLayout {
     }
 
     private void calculateRatio(float top) {
-        ratio = (top-collapseOffset) / (topViewHeight - collapseOffset);
-        Log.e("wwwwwwww", "calculateRatio   (top-collapseOffset) = " + (top-collapseOffset) + ";  (topViewHeight - collapseOffset) = " + (topViewHeight - collapseOffset) + ";  ratio =" + ratio);
+        ratio = (top - collapseOffset) / (topViewHeight - collapseOffset);
+        Log.e("wwwwwwww", "calculateRatio   (top-collapseOffset) = " + (top - collapseOffset) + ";  (topViewHeight - collapseOffset) = " + (topViewHeight - collapseOffset) + ";  ratio =" + ratio);
         if (dispatchingChildrenContentView) {
             resetDispatchingContentView();
         }
@@ -249,10 +248,10 @@ public class MyDragTopLayout  extends FrameLayout {
         }
     }
 
-    private void updatePanelState(){
+    private void updatePanelState() {
         if (calculateTopMarginTop() <= getPaddingTop() + collapseOffset) {
             panelState = PanelState.COLLAPSED;
-        } else if(calculateTopMarginTop() >= topView.getHeight()){
+        } else if (calculateTopMarginTop() >= topView.getHeight()) {
             panelState = PanelState.EXPANDED;
         } else {
             panelState = PanelState.SLIDING;
@@ -329,10 +328,10 @@ public class MyDragTopLayout  extends FrameLayout {
                 // Drag over the top view height.
                 vertical = Math.max(top, getPaddingTop() + collapseOffset);
             } else {
-                vertical =  Math.min(topViewHeight, Math.max(top, getPaddingTop() + collapseOffset));
+                vertical = Math.min(topViewHeight, Math.max(top, getPaddingTop() + collapseOffset));
             }
 
-            Log.e("wwwwwwww", "clampViewPositionVertical  " + vertical + ";   top = " + top) ;
+            Log.e("wwwwwwww", "clampViewPositionVertical  " + vertical + ";   top = " + top);
             return vertical;
 
         }
@@ -363,7 +362,7 @@ public class MyDragTopLayout  extends FrameLayout {
     public void computeScroll() {
         Log.e("wwwwwwww", "computeScroll  ");
         if (dragHelper.continueSettling(true)) {
-            Log.e("wwwwwwww", "computeScroll    dragHelper.continueSettling  = "  + true);
+            Log.e("wwwwwwww", "computeScroll    dragHelper.continueSettling  = " + true);
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
@@ -451,12 +450,12 @@ public class MyDragTopLayout  extends FrameLayout {
             if (panelListener != null) {
                 panelListener.onSliding(0.0f);
             }
-        }else{
+        } else {
             resetDragContent(anim, getPaddingTop() + collapseOffset);
         }
     }
 
-    public void updateTopViewHeight(int height){
+    public void updateTopViewHeight(int height) {
         ViewGroup.LayoutParams layoutParams = topView.getLayoutParams();
         layoutParams.height = height;
         topView.setLayoutParams(layoutParams);
