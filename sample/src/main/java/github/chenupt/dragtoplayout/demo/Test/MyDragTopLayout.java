@@ -170,11 +170,10 @@ public class MyDragTopLayout extends FrameLayout {
         resetTopViewHeight();
         resetContentHeight();
 
-        Log.e("wwwwwwwww", "onLayout   " + getContext().getResources().getDimensionPixelSize(R.dimen.common_150dp));
-        int topMarginTop = calculateTopMarginTop();
-        Log.e("wwwwwwwwwww", "onLayout   topMarginTop =  " + topMarginTop + "      " + contentTopTemp + "  ratio =  " + ratio);
-        topView.layout(left, Math.min(topView.getPaddingTop(), topMarginTop - topViewHeight), right,
-                topMarginTop);
+        Log.e("wwwwwwwwwww", "onLayout   contentTop =  " + contentTop + "      " + contentTopTemp + "  ratio =  " + ratio);
+        int topViewBottomY = (int) (contentTop + overlapping * ratio);
+        topView.layout(left, Math.min(topView.getPaddingTop(), topViewBottomY - topViewHeight), right,
+                topViewBottomY);
         dragContentView.layout(left + 60, contentTopTemp, right - 60,
                 contentTopTemp + dragContentView.getHeight());
     }
@@ -184,8 +183,8 @@ public class MyDragTopLayout extends FrameLayout {
         // Top layout is changed
         if (topViewHeight != newTopHeight) {
             if (panelState == PanelState.EXPANDED) {
-//                contentTop = (int) (newTopHeight - overlapping * ratio);
-                contentTop = newTopHeight;
+                contentTop = (int) (newTopHeight - overlapping * ratio);
+//                contentTop = newTopHeight;
                 Log.e("wwwwwwww", "wwwwwwwwwwww  resetTopViewHeight contentTop = " + contentTop);
                 handleSlide(contentTop);
             } else if (panelState == PanelState.COLLAPSED) {
@@ -215,14 +214,14 @@ public class MyDragTopLayout extends FrameLayout {
         });
     }
 
-    private int calculateTopMarginTop() {
-        contentMarginTop = (int) (contentTop + overlapping * ratio);
-        return contentMarginTop;
-    }
+//    private int calculateTopMarginTop() {
+//        contentMarginTop = (int) (contentTop + overlapping * ratio);
+//        return contentMarginTop;
+//    }
 
 
     private void resetDragContent(boolean anim, int top) {
-        contentTop = (int) (top - overlapping * ratio);
+        contentTop = top;
         if (anim) {
             dragHelper.smoothSlideViewTo(dragContentView, getPaddingLeft(), contentTop);
             postInvalidate();
@@ -232,7 +231,8 @@ public class MyDragTopLayout extends FrameLayout {
     }
 
     private void calculateRatio(float top) {
-        ratio = (top - collapseOffset) / (topViewHeight - collapseOffset);
+        ratio = (top - collapseOffset) / (topViewHeight - collapseOffset - overlapping);
+        Log.e("wwwwwwww", "calculateRatio111  top = " + top + "; collapseOffset = " + collapseOffset + "; topViewHeight = " + topViewHeight + ";  overlapping = " + overlapping);
         Log.e("wwwwwwww", "calculateRatio   (top-collapseOffset) = " + (top - collapseOffset) + ";  (topViewHeight - collapseOffset) = " + (topViewHeight - collapseOffset) + ";  ratio =" + ratio);
         if (dispatchingChildrenContentView) {
             resetDispatchingContentView();
@@ -249,9 +249,9 @@ public class MyDragTopLayout extends FrameLayout {
     }
 
     private void updatePanelState() {
-        if (calculateTopMarginTop() <= getPaddingTop() + collapseOffset) {
+        if (contentTop <= getPaddingTop() + collapseOffset) {
             panelState = PanelState.COLLAPSED;
-        } else if (calculateTopMarginTop() >= topView.getHeight()) {
+        } else if (contentTop >= topView.getHeight()) {
             panelState = PanelState.EXPANDED;
         } else {
             panelState = PanelState.SLIDING;
@@ -304,6 +304,10 @@ public class MyDragTopLayout extends FrameLayout {
             return child == dragContentView;
         }
 
+        /*
+        *
+        *  top 值来源于 clampViewPositionVertical
+        * */
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
@@ -321,6 +325,10 @@ public class MyDragTopLayout extends FrameLayout {
             return dragRange;
         }
 
+        /*
+        *
+        *   返回值用于 onViewPositionChanged top 参数
+        * */
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
             int vertical = top;
@@ -328,7 +336,7 @@ public class MyDragTopLayout extends FrameLayout {
                 // Drag over the top view height.
                 vertical = Math.max(top, getPaddingTop() + collapseOffset);
             } else {
-                vertical = Math.min(topViewHeight, Math.max(top, getPaddingTop() + collapseOffset));
+                vertical = Math.min(topViewHeight - overlapping, Math.max(top, getPaddingTop() + collapseOffset));
             }
 
             Log.e("wwwwwwww", "clampViewPositionVertical  " + vertical + ";   top = " + top);
@@ -336,6 +344,12 @@ public class MyDragTopLayout extends FrameLayout {
 
         }
 
+        /**
+         *
+         *  滑动结束时调用
+         *
+         *
+         * */
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
